@@ -1,0 +1,87 @@
+﻿@using Mawjoud2.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+
+}
+<!-- /BREADCRUMB -->
+<div id="breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="#">Acceuil</a></li>
+            <li class="active">Créer un compte</li>
+        </ul>
+    </div>
+</div>
+<!-- /BREADCRUMB -->
+<!-- section -->
+<div class="section">
+    <!-- container -->
+    <div class="container" id="checkout-form">
+        <!-- row -->
+
+
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            if (ViewBag.Message != "")
+            {
+                <div class="text-danger">*@ViewBag.Message</div>
+            }
+            <div class="col-md-6">
+                <div class="billing-details">
+                    <p>Already a customer ? <a href="#home">Login</a></p>
+                    <div class="section-title">
+                        <h3 class="title">Sign up NOW!</h3>
+                    </div>
+
+                    <div class="form-group" id="email_div">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "input", @placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        @Html.ValidationMessage("EmailExist", new { @class = "text-danger" })
+
+
+                    </div>
+
+                    <div class="form-group" id="password_div">
+                        @Html.TextBoxFor(m => m.Password, new { @class = "input", @placeholder = "Mot de passe" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group" style="text-align: center;">
+                            <input type="submit" name="Create" value="Create" class="btn btn-info">
+                        </div>
+                    </div>
+                    <p>
+                        @Html.ActionLink("Inscrire comme nouvel utilisateur", "Register")
+                    </p>
+                    @* Activez ceci une fois que vous avez activé la confirmation du compte pour la fonctionnalité de réinitialisation du mot de passe
+                    <p>
+                        @Html.ActionLink("Vous avez oublié votre mot de passe ?", "ForgotPassword")
+                    </p>*@
+                </div>
+            </div>
+        }
+    </div>
+            </div>
+
+            <div class="col-md-4">
+                <section id="socialLoginForm">
+                    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                </section>
+            </div>
+        </div>
+

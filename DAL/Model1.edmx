@@ -1,0 +1,497 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Db_MawjoudModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="memberRole">
+          <Key>
+            <PropertyRef Name="MemberRoleID" />
+          </Key>
+          <Property Name="MemberRoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberId" Type="int" />
+          <Property Name="RoleId" Type="int" />
+        </EntityType>
+        <EntityType Name="Members">
+          <Key>
+            <PropertyRef Name="MemberId" />
+          </Key>
+          <Property Name="MemberId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="100" />
+          <Property Name="LastName" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Memberphoto" Type="varchar(max)" />
+          <Property Name="Membercity" Type="varchar" MaxLength="100" />
+          <Property Name="Password" Type="varchar" MaxLength="100" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="IsEmailVerified" Type="bit" />
+          <Property Name="ActivationCode" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="MenuImage">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Name="MenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MenuTitle" Type="varchar" MaxLength="100" />
+          <Property Name="MenuImage" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="varchar" MaxLength="500" />
+          <Property Name="ProductPlace" Type="varchar" MaxLength="100" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+          <Property Name="ProductImage" Type="varchar(max)" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsFeatured" Type="bit" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="MemberId" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="SlideImage">
+          <Key>
+            <PropertyRef Name="SlideId" />
+          </Key>
+          <Property Name="SlideId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SlideTitle" Type="varchar" MaxLength="100" />
+          <Property Name="SlideImage" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="CONSTRAINT_Members">
+          <End Role="Members" Type="Self.Members" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="memberRole" Type="Self.memberRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberId" />
+            </Principal>
+            <Dependent Role="memberRole">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CONSTRAINT_Product">
+          <End Role="Members" Type="Self.Members" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__memberRol__Membe__300424B4">
+          <End Role="Members" Type="Self.Members" Multiplicity="0..1" />
+          <End Role="memberRole" Type="Self.memberRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberId" />
+            </Principal>
+            <Dependent Role="memberRole">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__memberRol__RoleI__30F848ED">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="memberRole" Type="Self.memberRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="memberRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__Categor__276EDEB3">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MemberId">
+          <End Role="Members" Type="Self.Members" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Db_MawjoudModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="memberRole" EntityType="Self.memberRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MenuImage" EntityType="Self.MenuImage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SlideImage" EntityType="Self.SlideImage" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="CONSTRAINT_Members" Association="Self.CONSTRAINT_Members">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="memberRole" EntitySet="memberRole" />
+          </AssociationSet>
+          <AssociationSet Name="CONSTRAINT_Product" Association="Self.CONSTRAINT_Product">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__memberRol__Membe__300424B4" Association="Self.FK__memberRol__Membe__300424B4">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="memberRole" EntitySet="memberRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK__memberRol__RoleI__30F848ED" Association="Self.FK__memberRol__RoleI__30F848ED">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="memberRole" EntitySet="memberRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Categor__276EDEB3" Association="Self.FK__Product__Categor__276EDEB3">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="MemberId" Association="Self.MemberId">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Db_MawjoudModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Product__Categor__276EDEB3" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="memberRole">
+          <Key>
+            <PropertyRef Name="MemberRoleID" />
+          </Key>
+          <Property Name="MemberRoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK__memberRol__RoleI__30F848ED" FromRole="memberRole" ToRole="Roles" />
+          <NavigationProperty Name="Members" Relationship="Db_MawjoudModel.CONSTRAINT_Members" FromRole="memberRole" ToRole="Members" />
+          <NavigationProperty Name="Members1" Relationship="Db_MawjoudModel.FK__memberRol__Membe__300424B4" FromRole="memberRole" ToRole="Members" />
+        </EntityType>
+        <EntityType Name="MenuImage">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Name="MenuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MenuTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MenuImage1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ProductPlace" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ProductImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsFeatured" Type="Boolean" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="MemberId" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Product__Categor__276EDEB3" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="Members" Relationship="Db_MawjoudModel.CONSTRAINT_Product" FromRole="Product" ToRole="Members" />
+          <NavigationProperty Name="Members1" Relationship="Db_MawjoudModel.MemberId" FromRole="Product" ToRole="Members" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="memberRole" Relationship="Self.FK__memberRol__RoleI__30F848ED" FromRole="Roles" ToRole="memberRole" />
+        </EntityType>
+        <EntityType Name="SlideImage">
+          <Key>
+            <PropertyRef Name="SlideId" />
+          </Key>
+          <Property Name="SlideId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SlideTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SlideImage1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__Product__Categor__276EDEB3">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__memberRol__RoleI__30F848ED">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="memberRole" Type="Self.memberRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="memberRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Db_MawjoudEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Category" EntityType="Self.Category" />
+          <EntitySet Name="memberRole" EntityType="Self.memberRole" />
+          <EntitySet Name="MenuImage" EntityType="Self.MenuImage" />
+          <EntitySet Name="Product" EntityType="Self.Product" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="SlideImage" EntityType="Self.SlideImage" />
+          <AssociationSet Name="FK__Product__Categor__276EDEB3" Association="Self.FK__Product__Categor__276EDEB3">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__memberRol__RoleI__30F848ED" Association="Self.FK__memberRol__RoleI__30F848ED">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="memberRole" EntitySet="memberRole" />
+          </AssociationSet>
+          <EntitySet Name="Members" EntityType="Db_MawjoudModel.Members" />
+          <AssociationSet Name="CONSTRAINT_Members" Association="Db_MawjoudModel.CONSTRAINT_Members">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="memberRole" EntitySet="memberRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK__memberRol__Membe__300424B4" Association="Db_MawjoudModel.FK__memberRol__Membe__300424B4">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="memberRole" EntitySet="memberRole" />
+          </AssociationSet>
+          <AssociationSet Name="CONSTRAINT_Product" Association="Db_MawjoudModel.CONSTRAINT_Product">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="MemberId" Association="Db_MawjoudModel.MemberId">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Members">
+          <Key>
+            <PropertyRef Name="MemberId" />
+          </Key>
+          <Property Name="MemberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Memberphoto" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Membercity" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="IsEmailVerified" Type="Boolean" />
+          <Property Name="ActivationCode" Type="Guid" />
+          <NavigationProperty Name="memberRole" Relationship="Db_MawjoudModel.CONSTRAINT_Members" FromRole="Members" ToRole="memberRole" />
+          <NavigationProperty Name="memberRole1" Relationship="Db_MawjoudModel.FK__memberRol__Membe__300424B4" FromRole="Members" ToRole="memberRole" />
+          <NavigationProperty Name="Product" Relationship="Db_MawjoudModel.CONSTRAINT_Product" FromRole="Members" ToRole="Product" />
+          <NavigationProperty Name="Product1" Relationship="Db_MawjoudModel.MemberId" FromRole="Members" ToRole="Product" />
+        </EntityType>
+        <Association Name="CONSTRAINT_Members">
+          <End Type="Db_MawjoudModel.Members" Role="Members" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Db_MawjoudModel.memberRole" Role="memberRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberId" />
+            </Principal>
+            <Dependent Role="memberRole">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__memberRol__Membe__300424B4">
+          <End Type="Db_MawjoudModel.Members" Role="Members" Multiplicity="0..1" />
+          <End Type="Db_MawjoudModel.memberRole" Role="memberRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberId" />
+            </Principal>
+            <Dependent Role="memberRole">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CONSTRAINT_Product">
+          <End Type="Db_MawjoudModel.Members" Role="Members" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Db_MawjoudModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MemberId">
+          <End Type="Db_MawjoudModel.Members" Role="Members" Multiplicity="0..1" />
+          <End Type="Db_MawjoudModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Db_MawjoudModelStoreContainer" CdmEntityContainer="Db_MawjoudEntities1">
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="Db_MawjoudModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="memberRole">
+            <EntityTypeMapping TypeName="Db_MawjoudModel.memberRole">
+              <MappingFragment StoreEntitySet="memberRole">
+                <ScalarProperty Name="MemberRoleID" ColumnName="MemberRoleID" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MenuImage">
+            <EntityTypeMapping TypeName="Db_MawjoudModel.MenuImage">
+              <MappingFragment StoreEntitySet="MenuImage">
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="MenuTitle" ColumnName="MenuTitle" />
+                <ScalarProperty Name="MenuImage1" ColumnName="MenuImage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="Db_MawjoudModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductPlace" ColumnName="ProductPlace" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="Db_MawjoudModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SlideImage">
+            <EntityTypeMapping TypeName="Db_MawjoudModel.SlideImage">
+              <MappingFragment StoreEntitySet="SlideImage">
+                <ScalarProperty Name="SlideId" ColumnName="SlideId" />
+                <ScalarProperty Name="SlideTitle" ColumnName="SlideTitle" />
+                <ScalarProperty Name="SlideImage1" ColumnName="SlideImage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Members">
+            <EntityTypeMapping TypeName="Db_MawjoudModel.Members">
+              <MappingFragment StoreEntitySet="Members">
+                <ScalarProperty Name="ActivationCode" ColumnName="ActivationCode" />
+                <ScalarProperty Name="IsEmailVerified" ColumnName="IsEmailVerified" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Membercity" ColumnName="Membercity" />
+                <ScalarProperty Name="Memberphoto" ColumnName="Memberphoto" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,161 @@
+﻿@model Mawjoud2.DAL.Members
+@{
+    ViewBag.Title = "AccountEdit";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+
+<!-- BREADCRUMB -->
+<div id="breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">Edit Account</li>
+        </ul>
+    </div>
+</div>
+<!-- /BREADCRUMB -->
+<!-- section -->
+<!--==================================
+=            User Profile            =
+===================================-->
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <section class="dashboard section">
+        <!-- Container Start -->
+        <div class="container">
+            <!-- Row Start -->
+            <div class="row">
+                <div class="col-md-10 offset-md-1 col-lg-4 offset-lg-0">
+                    <div class="sidebar">
+                        <!-- User Widget -->
+                        <div class="widget user-dashboard-profile">
+                            <!-- User Image -->
+                            <div class="profile-thumb">
+                                <img src="img/banner01.jpg" alt="" class="rounded-circle">
+                            </div>
+                            <!-- User Name -->
+                            <h5 class="text-center">Samanta Doe</h5>
+                            <p>Joined February 06, 2017</p>
+                            <a href="profile.html" class="btn btn-main-sm">Edit Profile</a>
+                        </div>
+                        <!-- Dashboard Links -->
+                        <div class="widget user-dashboard-menu">
+
+                            <ul>
+                                <li class="active">
+                                    <a href="account_ads.html"><i class="fa fa-user"></i> My Ads</a>
+                                </li>
+
+
+                                <li>
+                                    <a href="logout.html"><i class="fa fa-cog"></i> Logout</a>
+                                </li>
+                                <li>
+                                    <a href="delete-account.html"><i class="fa fa-power-off"></i>Delete Account</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
+                    <!-- Edit Personal Info -->
+                    <div class="widget personal-info">
+                        <h3 class="widget-header user">Edit Personal Information</h3>
+                        <form action="#">
+                            <!-- First Name -->
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+
+                            </div>
+                            <!-- Last Name -->
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                            </div>
+                            <!-- File chooser -->
+                            <div class="form-group choose-file">
+                                @Html.LabelFor(model => model.Memberphoto, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                                <input type="file" name="file" id="file" style="width: 100%;" />
+                                @Html.ValidationMessageFor(model => model.Memberphoto, "", new { @class = "text-danger" })
+
+                            </div>
+                            <!-- Member City -->
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Membercity, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                                @Html.EditorFor(model => model.Membercity, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Membercity, "", new { @class = "text-danger" })
+                            </div>
+                            <!-- Checkbox -->
+                            <div class="form-check">
+                                @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                                @Html.CheckBox("IsActive")
+                                @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                            </div>
+
+
+                            <!-- Submit button -->
+                  
+                            <div class="form-group" style="text-align: center;">
+                                <button  class=" btn btn-info">Save My Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Change Password -->
+                    <div class="widget change-password">
+                        <h3 class="widget-header user">Edit Password</h3>
+                        <form action="#">
+                            <!-- Current Password -->
+                            <div class="form-group">
+                                <label for="current-password">Current Password</label>
+                                <input type="password" class="form-control" id="current-password">
+                            </div>
+                            <!-- New Password -->
+                            <div class="form-group">
+                                <label for="new-password">New Password</label>
+                                <input type="password" class="form-control" id="new-password">
+                            </div>
+                            <!-- Confirm New Password -->
+                            <div class="form-group">
+                                <label for="confirm-password">Confirm New Password</label>
+                                <input type="password" class="form-control" id="confirm-password">
+                            </div>
+                            <!-- Submit Button -->
+                            <button class="btn btn-transparent">Change Password</button>
+                        </form>
+                    </div>
+                    <!-- Change Email Address -->
+                    <div class="widget change-email mb-0">
+                        <h3 class="widget-header user">Edit Email Address</h3>
+                        <form action="#">
+                            <!-- Current Password -->
+                            <div class="form-group">
+                                <label for="current-email">Current Email</label>
+                                <input type="email" class="form-control" id="current-email">
+                            </div>
+                            <!-- New email -->
+                            <div class="form-group">
+                                <label for="new-email">New email</label>
+                                <input type="email" class="form-control" id="new-email">
+                            </div>
+                            <!-- Submit Button -->
+                            <button class="btn btn-transparent">Change email</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Row End -->
+        </div>
+        <!-- Container End -->
+    </section>
+}
